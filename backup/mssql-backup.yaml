@@ -1,0 +1,53 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: mssql-tools
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: mssql-backup
+            image: mcr.microsoft.com/mssql-tools:latest
+            imagePullPolicy: IfNotPresent
+            command:
+              - 'bash'
+              - '-eo'
+              - 'pipefail'
+              - '-c'
+              - >
+                /opt/mssql-tools/bin/sqlcmd -S mssql-deployment,1433 -d demo -U ${DATABASE_USER} -P ${DATABASE_PASSWORD} -i /etc/config/DB_BACKUP.sql;
+                echo 'Movind files to backup folder';
+                mv /var/opt/mssql/*.BAK /var/opt/mssqlbackup;
+                echo 'Done!';
+            volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
+            - mountPath: /var/opt/mssqlbackup
+              name: mssqlbackup
+            - name: mssqldb
+              mountPath: /var/opt/mssql
+            env:
+              - name: DATABASE_USER
+                valueFrom:
+                  secretKeyRef:
+                    key: DB_USER
+                    name: mssql-backup-secret
+              - name: DATABASE_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: DB_PASSWORD
+                    name: mssql-backup-secret
+          restartPolicy: OnFailure
+          volumes:
+          - name: config-volume
+            configMap:
+              name: backup-config
+          - name: mssqldb
+            persistentVolumeClaim:
+              claimName: mssql-data
+          - name: mssqlbackup
+            persistentVolumeClaim:
+              claimName: mssql-backup-data
