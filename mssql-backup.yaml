@@ -33,13 +33,13 @@ spec:
               - name: DATABASE_USER
                 valueFrom:
                   secretKeyRef:
-                    key: SA_USER
-                    name: mssql
+                    key: DB_USER
+                    name: mssql-backup-secret
               - name: DATABASE_PASSWORD
                 valueFrom:
                   secretKeyRef:
-                    key: SA_PASSWORD
-                    name: mssql
+                    key: DB_PASSWORD
+                    name: mssql-backup-secret
           restartPolicy: OnFailure
           volumes:
           - name: config-volume
