@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: mssql-tools
 spec:
-  schedule: ${BACKUP_SCHEDULE}
+  schedule: "*/1 * * * *"
   jobTemplate:
     spec:
       template:

@@ -45,4 +45,3 @@ data:
     END
     CLOSE db_cursor
     DEALLOCATE db_cursor
-  BACKUP_SCHEDULE: "*/1 * * * *"
