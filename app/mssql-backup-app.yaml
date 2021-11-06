@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mssql-backup-app
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: mssql-bakup
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: backup
+    repoURL: https://github.com/wael2000/msssql-backup
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true
