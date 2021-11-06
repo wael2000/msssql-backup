@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: backup-config
+  name: mssql-backup-config
 data:
   DB_BACKUP.sql: |
     DECLARE @path VARCHAR(500)
@@ -45,4 +45,4 @@ data:
     END
     CLOSE db_cursor
     DEALLOCATE db_cursor
-  NOTIFICATION_EMAIL: wael@stakater.com
+  BACKUP_SCHEDULE: "*/1 * * * *"

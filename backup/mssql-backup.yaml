@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: mssql-tools
 spec:
-  schedule: "*/1 * * * *"
+  schedule: ${BACKUP_SCHEDULE}
   jobTemplate:
     spec:
       template:
@@ -40,11 +40,16 @@ spec:
                   secretKeyRef:
                     key: DB_PASSWORD
                     name: mssql-backup-secret
+              - name: BACKUP_SCHEDULE
+                valueFrom:
+                  configMapKeyRef:
+                      key: BACKUP_SCHEDULE
+                      name: mssql-backup-config
           restartPolicy: OnFailure
           volumes:
           - name: config-volume
             configMap:
-              name: backup-config
+              name: mssql-backup-config
           - name: mssqldb
             persistentVolumeClaim:
               claimName: mssql-data
