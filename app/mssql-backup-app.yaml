@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: mssql-backup-app
-  namespace: openshift-gitops
 spec:
   destination:
     namespace: mssql-bakup
