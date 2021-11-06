@@ -4,7 +4,7 @@ metadata:
   name: mssql-backup-app
 spec:
   destination:
-    namespace: mssql-backup
+    namespace: mssql
     server: https://kubernetes.default.svc
   project: default
   source:
