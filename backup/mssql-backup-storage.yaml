@@ -4,6 +4,7 @@ metadata:
   name: mssql-backup-data
   annotations:
     volume.beta.kubernetes.io/storage-class: hostpath
+    argocd.argoproj.io/sync-options: Prune=false
 spec:
   accessModes:
   - ReadWriteOnce
