@@ -40,11 +40,6 @@ spec:
                   secretKeyRef:
                     key: DB_PASSWORD
                     name: mssql-backup-secret
-              - name: BACKUP_SCHEDULE
-                valueFrom:
-                  configMapKeyRef:
-                      key: BACKUP_SCHEDULE
-                      name: mssql-backup-config
           restartPolicy: OnFailure
           volumes:
           - name: config-volume
