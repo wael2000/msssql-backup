@@ -19,7 +19,7 @@ spec:
               - '-c'
               - >
                 /opt/mssql-tools/bin/sqlcmd -S mssql-deployment,1433 -d demo -U ${DATABASE_USER} -P ${DATABASE_PASSWORD} -i /etc/config/DB_BACKUP.sql;
-                echo 'Movind files to backup folder';
+                echo 'Moving files to backup folder';
                 mv /var/opt/mssql/*.BAK /var/opt/mssqlbackup;
                 echo 'Done!';
             volumeMounts:
